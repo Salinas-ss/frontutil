@@ -4,6 +4,7 @@ import { IPage } from '../../../../../model/plist';
 import { Blog } from '../../../../../model/blog';
 import { BotoneraComponent } from '../../../botonera/botonera';
 import { neighborhood } from '../../../../../environment/environment';
+import { BotoneraService } from '../../../../../service/botonera';
 
 @Component({
   selector: 'app-plist',
@@ -17,25 +18,32 @@ export class PlistBlog {
   numPage: number = 0;
   numRpp: number = 5;
 
-  constructor(private blogService: BlogService) { }
+  constructor(private blogService: BlogService, private oBotoneraService: BotoneraService) { }
 
-  // oBotonera eliminado, ahora la botonera es un componente
-  readonly neighborhood = neighborhood;
+  oBotonera: string[] = [];
 
   ngOnInit() {
 
     this.getPage();
   }
 
-  getPage() {
+   getPage() {
     this.blogService.getPage(this.numPage, this.numRpp).subscribe({
       next: (data: IPage<Blog>) => {
         this.oPage = data;
+        // queremos que se calcule la botonera
+        this.oBotonera = this.oBotoneraService.getBotonera(
+          this.oPage.number,
+          this.oPage.totalPages,
+          neighborhood
+        );
+        console.log('Botonera...', this.oBotonera);
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
+    // pintar botonera
   }
 
 

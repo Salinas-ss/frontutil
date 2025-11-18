@@ -1,0 +1,38 @@
+ <nav>
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage() === 0">
+          <a
+            class="page-link"
+            (click)="onPageChange(currentPage() - 1)"
+            href="#"
+            (click)="$event.preventDefault()"
+            >Previous</a
+          >
+        </li>
+        @for (button of buttons(); track button) { @if (button === '...') {
+        <li class="page-item">
+          <span class="page-link">{{ button }}</span>
+        </li>
+        } @else {
+        <li class="page-item" [class.active]="Number(button) === currentPage() + 1">
+          <a
+            class="page-link"
+            (click)="onPageChange(Number(button) - 1)"
+            href="#"
+            (click)="$event.preventDefault()"
+            >{{ button }}</a
+          >
+        </li>
+        } }
+        <li class="page-item" [class.disabled]="currentPage() + 1 === totalPages()">
+          <a
+            class="page-link"
+            (click)="onPageChange(currentPage() + 1)"
+            href="#"
+            (click)="$event.preventDefault()"
+            >Next</a
+          >
+        </li>
+      </ul>
+    </nav>
+  

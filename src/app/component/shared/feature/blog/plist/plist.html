@@ -3,8 +3,8 @@
 <app-botonera
   [currentPage]="oPage?.number ?? 0"
   [totalPages]="oPage?.totalPages ?? 1"
-  [neighborhood]="neighborhood"
-  (pageChange)="onPageChange($event)"
+  (pageChange)="onPageChange($event)" 
+  [buttons]="oBotonera"
 ></app-botonera>
 
 <table class="table">
